@@ -5,7 +5,7 @@ const Api = require(path.join(__dirname, '..', 'api', 'mixer.js'));
 const api = new Api();
 
 router.get('/v1/pipersound/play', (req, res) => {
-    api.GetVolAudio(req, res);
+    api.playAudio(req, res);
 })
 router.post('/v1/pipersound/setvolume', (req, res) => {
     api.setVolAudio(req, res)
