@@ -11,23 +11,30 @@ playSound(DataProvider dataProvider, context) async {
       headers: {
         "content-type": "application/json",
       },
-      
-    ).timeout(Duration(seconds: 2));
-
+    ).timeout(
+  const Duration(seconds: 2),
+  onTimeout: () {
+    return http.Response('Error', 404);
+  },
+);
     if (response.statusCode == 200) {
-      print("deu certo");
-    } else {
-      print("Algo deu errado");
-    }
+       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.green,
+        content: Text("🔈 Sucesso em instantes o áudio será tocado 🔈", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),)));
+
+    } else if(response.statusCode == 404){
+             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.red,
+        content: Text("Erro: 🔇 Sem conexão com o servidor. Verifique as configurações e sua rede", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),)));
+
+    };
   }
-  on TimeoutException catch (_) {
-          print("Erro a rede está indisponível. Verifique sua conexão de rede.");
+   on SocketException catch (_) {
+            print("Erro a rede está indisponível. Verifique sua conexão de rede.");
        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Colors.red,
         content: Text("Erro: Sem conexão com o servidor. Verifique as configurações e sua rede", style: TextStyle(fontSize: 20),)));
 
-} on SocketException catch (_) {
 
-}
- 
+  }
 }

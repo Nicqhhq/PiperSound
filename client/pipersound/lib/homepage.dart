@@ -67,8 +67,16 @@ class _HomePageState extends State<HomePage> {
                         height: MediaQuery.of(context).size.height * 0.09,
                         width: MediaQuery.of(context).size.width * 0.7,
                         decoration: BoxDecoration(
-                          color: Color.fromRGBO(111, 187, 82, 1),
-                          borderRadius: BorderRadius.circular(10)
+                          borderRadius: BorderRadius.circular(10),
+                          gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment(0.8, 1),
+                          colors: <Color>[
+                            Colors.green,
+                            Colors.yellow.shade400,
+                          ], // Gradient from https://learnui.design/tools/gradient-generator.html
+                          tileMode: TileMode.mirror,
+                        ),
                         ),
                         child: Center(child: Text("Pão Fresco", style: TextStyle(color: Colors.white, fontSize: 40, fontWeight: FontWeight.w600),))),
                       SizedBox(

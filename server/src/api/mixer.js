@@ -23,10 +23,10 @@ class Mixer {
         const volAudio = corpo['volume']
         const sessions = NodeAudioVolumeMixer.getAudioSessionProcesses();
         const session = sessions.find((value) => {
-            return value.name === "chrome.exe";
+            return value.name === "ZaraRadio.exe";
         });
         NodeAudioVolumeMixer.setAudioSessionVolumeLevelScalar(session.pid, volAudio / 100);
-        console.log(`Volume do Google alterado para ${volAudio / 100}%`)
+        console.log(`Volume do Zara Audio alterado para ${volAudio / 100}%`)
         res.sendStatus(200);
     }
     playAudio(req, res) {
@@ -39,15 +39,15 @@ class Mixer {
                 console.log('Áudio reproduzido com sucesso!');
                 res.sendStatus(200)
                 setTimeout(() => {
-                    this.setAppVolAudioTrue(0.7)
-                }, 7000);
+                    this.setAppVolAudioTrue(1.0)
+                }, 33000);
             }
         });
     }
     setAppVolAudioTrue(volume) {
         const sessions = NodeAudioVolumeMixer.getAudioSessionProcesses();
         const session = sessions.find((value) => {
-            return value.name === "chrome.exe";
+            return value.name === "ZaraRadio.exe";
         });
         NodeAudioVolumeMixer.setAudioSessionVolumeLevelScalar(session.pid, volume);
         console.log(`Volume do Google alterado para 10%`)

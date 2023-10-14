@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pipersound/homepage.dart';
 import 'package:pipersound/provider/dataprovider.dart';
 import 'package:provider/provider.dart';
-
-
-
 AppBar appbarCustom(context, DataProvider dataProvider){
   final dataProvider = Provider.of<DataProvider>(context);
   TextEditingController controller = TextEditingController();
@@ -28,16 +25,15 @@ AppBar appbarCustom(context, DataProvider dataProvider){
                         labelText: 'Endereço Servidor Porta',
                         prefix: Text('http://')
                       ),
-                      // onChanged: (value){
-                      //   dataProvider.updateHttpAddres(value);
-                      //   setServerAddress(context, dataProvider, value);
-                      //   // setServerAddress(context,dataProvider, value);
-                      // },
                     ),
                     TextButton(
-                      child: Text("Salvar"), 
+                      child: Text("Salvar"),
                       onPressed: (){
                         setServerAddress(context, dataProvider, controller.text);
+                        Navigator.of(context).pop();
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: Colors.green,
+                          content: Center(child: Text("Configuração Salva", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),))));
                       })
                  ]
                 ),
