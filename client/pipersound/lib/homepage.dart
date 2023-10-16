@@ -40,11 +40,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final dataProvider = Provider.of<DataProvider>(context);
     print('valor ${dataProvider.sharedData.httpAddress}');
-    var heightTop = MediaQuery.of(context).viewPadding.top + appbarCustom(context, dataProvider).preferredSize.height;
+    var heightTop = MediaQuery.of(context).viewPadding.top + AppBarCustom(context: context, dataProvider: dataProvider).preferredSize.height;
     final TextEditingController controller = TextEditingController();
     controller.text = dataProvider.sharedData.httpAddress;
     return Scaffold(
-      appBar: appbarCustom(context, dataProvider),
+      appBar: AppBarCustom(context: context, dataProvider: dataProvider,),
       body: Column(
         children: [
            Stack(
@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                             progress: false,
                             gradientOrientation: GradientOrientation.Horizontal,
                             onTap: (finish) {
-                              playSound(dataProvider, context);
+                              playSound(dataProvider, context, dataProvider.sharedData.unidade);
                               },
                               child: Text(
                                 'Tocar Som',

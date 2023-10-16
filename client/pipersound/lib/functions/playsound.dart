@@ -1,22 +1,24 @@
-import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pipersound/provider/dataprovider.dart';
 
-playSound(DataProvider dataProvider, context) async {
+playSound(DataProvider dataProvider, context, unidade) async {
   try {
-    var response = await http.get(
+    var response = await http.post(
       Uri.parse('http://${dataProvider.sharedData.httpAddress}/v1/pipersound/play'),
       headers: {
         "content-type": "application/json",
       },
+      body: jsonEncode({'unidade': unidade })
     ).timeout(
   const Duration(seconds: 2),
   onTimeout: () {
     return http.Response('Error', 404);
   },
 );
+    print(response.body);
     if (response.statusCode == 200) {
        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Colors.green,

@@ -11,4 +11,9 @@ class DataProvider extends ChangeNotifier{
     print(_sharedData.httpAddress);
     notifyListeners();
   }
+  void updateUnidade(String unidade){
+    _sharedData.unidade = unidade;
+    print(_sharedData.unidade + 'Provider');
+    notifyListeners();
+  }
 }
