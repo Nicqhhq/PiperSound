@@ -33,7 +33,7 @@ static const List<String> list = <String>['1', '2', '4', '5', '6', '7', '100'];
               return AlertDialog(
                 title: Text('Configurações'),
                 content: Container(
-                  height: MediaQuery.of(context).size.height * 0.19,
+                  height: MediaQuery.of(context).size.height * 0.21,
                   width:  MediaQuery.of(context).size.width * 0.4,
                   child: Column(
                       children: [
@@ -60,6 +60,7 @@ static const List<String> list = <String>['1', '2', '4', '5', '6', '7', '100'];
                                     setState(() {
                                     dropdownValue = value!;
                                    dataProvider.updateUnidade(value);
+                                   setUnidade(context,dataProvider, value);
                                   })
                               }),
                             ),

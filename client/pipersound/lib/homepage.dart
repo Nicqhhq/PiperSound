@@ -26,6 +26,18 @@ class HomePage extends StatefulWidget {
     prefs.setString('httpAddress', await endereco);
     dataProvider.updateHttpAddres(await endereco);
   }
+  Future<String> getUnidade(context, DataProvider dataProvider) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final unidade = prefs.getString('unidade') ?? '';
+    dataProvider.updateUnidade(unidade);
+    return dataProvider.sharedData.unidade;
+  }
+  setUnidade(context, DataProvider dataProvider, unidade) async {
+    print(unidade);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('unidade', await unidade);
+    dataProvider.updateUnidade(await unidade);
+  }
 
 
 class _HomePageState extends State<HomePage> {
@@ -34,6 +46,7 @@ class _HomePageState extends State<HomePage> {
       super.initState();
     final dataProvider = Provider.of<DataProvider>(context, listen: false);
     setServerAddress(context, dataProvider, getServerAddress(context, dataProvider));
+    setUnidade(context, dataProvider, getUnidade(context, dataProvider));
   print('valor ${dataProvider.sharedData.httpAddress}');
     }
   @override
