@@ -1,3 +1,3 @@
-const appName = 'ZaraRadio.exe';
+const appName = 'chrome.exe';
 
 exports.appName = appName;

@@ -79,13 +79,13 @@ class Mixer {
                 break;
         }
         console.log(numero);
-        res.sendStatus(200);
         hermes.enviaMensagem(numero, `⚠️ *Olá ${nome}* ⚠️ \nFoi reproduzido o aviso para os clientes sobre o pão fresquinho\n*Horário:* *${horas}:${minutosFormatados}*`).then((_) => { console.log(_) }).catch((_) => { console.log(_) })
         this.setAppVolAudioTrue(0.1)
         const audioFile = '../../vinheta.mp3';
         player.play(audioFile, (err) => {
             if (err) {
                 console.error(`Erro ao reproduzir o áudio: ${err}`);
+                res.sendStatus(400)
             } else {
                 console.log('Áudio reproduzido com sucesso!');
                 res.sendStatus(200)
