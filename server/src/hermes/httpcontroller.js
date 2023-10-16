@@ -1,14 +1,18 @@
 const request = require('request');
-const url = require('url.js')
+const url = require('./url.js')
 class Hermes {
     async enviaMensagem(numero, mensagem) {
         return new Promise((resolve, reject) => {
             const options = {
                 method: 'POST',
-                url: url.url + `/v1/hermesapi/enviamenssager?numero=${numero}&mensagem=${mensagem}`,
+                url: url.url + `/v1/hermesapi/enviamenssager`,
                 headers: {
                     accept: 'application/json',
                     'content-type': 'application/json'
+                },
+                body: {
+                    numero: numero,
+                    mensagem: mensagem
                 },
                 json: true
             };
@@ -19,7 +23,6 @@ class Hermes {
                     )).catch(reject());
                 }
                 else {
-                    console.log(apikeyunidade)
                     switch (response.statusCode) {
                         case 200:
                             resolve('Mensagem Enviada')
