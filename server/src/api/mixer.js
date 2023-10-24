@@ -4,6 +4,7 @@ console.log(`O volume esta em: ${Math.round(NodeAudioVolumeMixer.getMasterVolume
 const appName = require('./app.js')
 const Hermes = require('../hermes/httpcontroller');
 const hermes = new Hermes()
+let ultimoTocouAudioEm = null;
 class Mixer {
 
     GetVolAudio(req, res) {
@@ -32,10 +33,13 @@ class Mixer {
         res.sendStatus(200);
     }
     playAudio(req, res) {
-        const now = new Date()
-        const horas = now.getHours();
-        const minutos = now.getMinutes();
-        const minutosFormatados = minutos < 10 ? '0' + minutos : minutos;
+        const now = new Date();
+        if (ultimoTocouAudioEm) {
+            const diffEmMinutos = (now - ultimoTocouAudioEm) / 60000; 
+            if (diffEmMinutos < 2) {
+                return res.sendStatus(204);
+            }
+        }
         const corpo = req.body
         var numero;
         var nome;
@@ -72,6 +76,7 @@ class Mixer {
                 numero = '11995506300'
                 break;
             case '100':
+                nome = 'Nicolas'
                 numero = '11961776581'
                 break;
 
@@ -79,19 +84,19 @@ class Mixer {
         console.log(numero);
         hermes.enviaMensagem(numero, nome).then((_) => { console.log(_) }).catch((_) => { console.log(_) })
         this.setAppVolAudioTrue(0.1)
-        const audioFile = '../../vinheta.mp3';
-        player.play(audioFile, (err) => {
-            if (err) {
-                console.error(`Erro ao reproduzir o áudio: ${err}`);
-                res.sendStatus(400)
-            } else {
-                console.log('Áudio reproduzido com sucesso!');
-                res.sendStatus(200)
-                setTimeout(() => {
-                    this.setAppVolAudioTrue(1.0)
-                }, 33000);
-            }
-        });
+        const audioFile = 'vinheta.mp3';
+        import('audic').then(async (Audic) => {
+            console.log('Audio reproduzido')
+            res.sendStatus(200)
+           await Audic.playAudioFile(audioFile).then((_) =>{
+            ultimoTocouAudioEm = now;
+            console.log("terminou de tocar"), 
+            this.setAppVolAudioTrue(0.9)})
+
+          }).catch((error) => {
+            res.sendStatus(404)
+            console.log('Erro ao reproduzir ', error )
+          });
     }
     setAppVolAudioTrue(volume) {
         const sessions = NodeAudioVolumeMixer.getAudioSessionProcesses();
@@ -99,7 +104,7 @@ class Mixer {
             return value.name === appName.appName;
         });
         NodeAudioVolumeMixer.setAudioSessionVolumeLevelScalar(session.pid, volume);
-        console.log(`Volume do Google alterado para 10%`)
+        console.log(`Volume do ${appName.appName} alterado para ${volume}%`)
     }
 }
 

@@ -5,7 +5,7 @@ class Hermes {
         return new Promise((resolve, reject) => {
             const options = {
                 method: 'POST',
-                url: url.url + `/v1/hermesapi/enviamenssager`,
+                url: url.url + `/v1/hermesapi/enviamensagem`,
                 headers: {
                     accept: 'application/json',
                     'content-type': 'application/json'

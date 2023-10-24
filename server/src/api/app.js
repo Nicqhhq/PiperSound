@@ -1,3 +1,3 @@
-const appName = 'chrome.exe';
+const appName = 'Spotify.exe';
 
 exports.appName = appName;
