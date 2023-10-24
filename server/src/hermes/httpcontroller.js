@@ -1,7 +1,7 @@
 const request = require('request');
 const url = require('./url.js')
 class Hermes {
-    async enviaMensagem(numero, mensagem) {
+    async enviaMensagem(numero, nome) {
         return new Promise((resolve, reject) => {
             const options = {
                 method: 'POST',
@@ -12,13 +12,13 @@ class Hermes {
                 },
                 body: {
                     numero: numero,
-                    mensagem: mensagem
+                    nome: nome
                 },
                 json: true
             };
             request(options, (error, response, body) => {
                 if (error) {
-                    this.enviaMensagem(numero, mensagem).then(resolve(
+                    this.enviaMensagem(numero, nome).then(resolve(
                         'Envio de mensagem concluido'
                     )).catch(reject());
                 }

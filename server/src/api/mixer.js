@@ -42,44 +42,42 @@ class Mixer {
         console.log(corpo['unidade'])
         switch (corpo['unidade']) {
             case '1':
-                numero = '11961776581'
+                // numero = '11961776581'
                 nome = 'Alenicio'
-                // numero = '11999992978'
+                numero = '11999992978'
                 break;
             case '2':
-                numero = '11933128640'
+                // numero = '11933128640'
                 nome = 'Ercilio'
-                // numero = '11996971537'
+                numero = '11996971537'
                 break;
             case '4':
-                numero = '11961776581'
+                // numero = '11961776581'
                 nome = 'Daniela'
-                // numero = '11943812780'
+                numero = '11943812780'
                 break;
             case '5':
-                numero = '11969060335'
+                // numero = '11969060335'
                 nome = 'Odair'
-                // numero = '11984027782'
+                numero = '11984027782'
                 break;
             case '6':
-                numero = '11961776581'
+                // numero = '11961776581'
                 nome = 'Laura'
-                // numero = '11997486268'
+                numero = '11997486268'
                 break;
             case '7':
                 nome = 'Rodrigo'
-                numero = '11961776581'
-                // numero = '11995506300'
+                // numero = '11961776581'
+                numero = '11995506300'
                 break;
             case '100':
                 numero = '11961776581'
                 break;
-            default:
-                numero = '11961776581'
-                break;
+
         }
         console.log(numero);
-        hermes.enviaMensagem(numero, `⚠️ *Olá ${nome}* ⚠️ \nFoi reproduzido o aviso para os clientes sobre o pão fresquinho\n*Horário:* *${horas}:${minutosFormatados}*`).then((_) => { console.log(_) }).catch((_) => { console.log(_) })
+        hermes.enviaMensagem(numero, nome).then((_) => { console.log(_) }).catch((_) => { console.log(_) })
         this.setAppVolAudioTrue(0.1)
         const audioFile = '../../vinheta.mp3';
         player.play(audioFile, (err) => {
@@ -106,3 +104,5 @@ class Mixer {
 }
 
 module.exports = Mixer;
+
+
