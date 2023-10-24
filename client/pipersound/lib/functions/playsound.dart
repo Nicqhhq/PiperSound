@@ -19,12 +19,19 @@ playSound(DataProvider dataProvider, context, unidade) async {
   },
 );
     print(response.body);
+    print(response.statusCode);
     if (response.statusCode == 200) {
        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Colors.green,
         content: Text("🔈 Sucesso em instantes o áudio será tocado 🔈", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),)));
 
-    } else if(response.statusCode == 404){
+    }else if(response.statusCode == 204){
+             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.yellow,
+        content: Text("🔇 Aviso o áudio foi reproduzido em menos de 2 minutos \nAguarde para tocar novamente 🔇 ", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black),)));
+
+    }
+     else if(response.statusCode == 404){
              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Colors.red,
         content: Text("Erro: 🔇 Sem conexão com o servidor. Verifique as configurações e sua rede", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),)));
