@@ -1,0 +1,16 @@
+{
+  "name": "electronpipersound",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "author": "Nicolas Pimenta",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^27.1.0",
+    "electron-reload": "^2.0.0-alpha.1"
+  }
+}

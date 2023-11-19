@@ -1,0 +1,14 @@
+p.center {
+    margin: auto;
+    text-align: center;
+    color: white;
+}
+
+body {
+    background-color: #282A36;
+}
+
+h1 {
+    text-align: center;
+    color: #BD93F9;
+}
