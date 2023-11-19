@@ -12,6 +12,23 @@
 <body>
     <h1>PiperSound V2 🔈</h1>
     <p class="center">🔈 Aplicação de Vinhetas para Rádios 🔈</p>
+
+    <!-- Adicione esta linha para incluir o script -->
+    <script>
+        const { ipcRenderer } = require('electron');
+
+        ipcRenderer.on('update-audio-sessions', (event, sessions) => {
+            // Atualize o conteúdo da página com os dados recebidos
+            const sessionsList = document.createElement('ul');
+            sessions.forEach(session => {
+                const listItem = document.createElement('li');
+                listItem.textContent = session.name;
+                sessionsList.appendChild(listItem);
+            });
+
+            document.body.appendChild(sessionsList);
+        });
+    </script>
 </body>
 
 </html>

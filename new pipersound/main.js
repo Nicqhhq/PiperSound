@@ -1,20 +1,22 @@
-const { app, BrowserWindow } = require('electron')
-const path = require('path')
-require('electron-reload')(__dirname, {
-    electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
-});
+const { app, BrowserWindow } = require('electron');
+const { NodeAudioVolumeMixer } = require("node-audio-volume-mixer");
 
+let mainWindow;
 
-const createWindow = () => {
-    const win = new BrowserWindow({
+function createWindow() {
+    mainWindow = new BrowserWindow({
         width: 800,
-        height: 600
-    })
-    win.loadFile('index.html')
+        height: 600,
+        webPreferences: {
+            nodeIntegration: true,
+        },
+    });
 
+    mainWindow.loadFile('index.html');
 
+    // Chama a função e envia os dados para a janela renderizada
+    const sessions = NodeAudioVolumeMixer.getAudioSessionProcesses();
+    mainWindow.webContents.send('update-audio-sessions', sessions);
 }
 
-app.whenReady().then(() => {
-    createWindow()
-})
+app.whenReady().then(createWindow);
