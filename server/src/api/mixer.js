@@ -5,8 +5,7 @@ console.log(`O volume esta em: ${Math.round(NodeAudioVolumeMixer.getMasterVolume
 const appName = require('./app.js')
 const Hermes = require('../hermes/httpcontroller');
 const hermes = new Hermes()
-const GravaLog = require(path.join(__dirname, '..', 'log', 'gravalog.js'))
-const gravaLog = new GravaLog();
+const log = require(path.join(__dirname, '..', 'log', 'gravalog.js'))
 let ultimoTocouAudioEm = null;
 class Mixer {
 
@@ -87,20 +86,20 @@ class Mixer {
         console.log(numero);
         hermes.enviaMensagem(numero, nome).then((_) => { console.log(_) }).catch((_) => { console.log(_) })
         this.setAppVolAudioTrue(0.1)
-        const audioFile = 'vinheta.mp3';
+        const audioFile = path.join(__dirname, '..', '..', 'vinheta.mp3');
         player.play(audioFile, (err) => {
             if (err) {
                 console.error(`Erro ao reproduzir o áudio: ${err}`);
                 res.sendStatus(400)
  			setTimeout(() => {
-                gravaLog("erro ao reproduzir audio")
+                log.gravaLog("erro ao reproduzir audio")
                     this.setAppVolAudioTrue(1.0)
                 }, 33000);
             } else {
                 console.log('Áudio reproduzido com sucesso!');
 		ultimoTocouAudioEm = now;
                 res.sendStatus(200)
-                gravaLog("Audio Reproduzido com sucesso")
+                log.gravaLog("Audio Reproduzido com sucesso")
                 setTimeout(() => {
                     this.setAppVolAudioTrue(1.0)
                 }, 33000);
@@ -114,7 +113,7 @@ class Mixer {
         });
         NodeAudioVolumeMixer.setAudioSessionVolumeLevelScalar(session.pid, volume);
         console.log(`Volume do ${appName.appName} alterado para ${volume}%`)
-        gravaLog(`Volume do ${appName.appName} alterado para ${volume}%`)
+        log.gravaLog(`Volume do ${appName.appName} alterado para ${volume}%`)
     }
 }
 
