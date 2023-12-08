@@ -13,7 +13,7 @@ playSound(DataProvider dataProvider, context, unidade) async {
       },
       body: jsonEncode({'unidade': unidade })
     ).timeout(
-  const Duration(seconds: 2),
+  const Duration(seconds: 5),
   onTimeout: () {
     return http.Response('Error', 404);
   },

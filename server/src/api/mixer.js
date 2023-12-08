@@ -1,9 +1,12 @@
 const { NodeAudioVolumeMixer } = require("node-audio-volume-mixer");
+const path = require('path')
 const player = require('play-sound')();
 console.log(`O volume esta em: ${Math.round(NodeAudioVolumeMixer.getMasterVolumeLevelScalar() * 100)}%`)
 const appName = require('./app.js')
 const Hermes = require('../hermes/httpcontroller');
 const hermes = new Hermes()
+const GravaLog = require(path.join(__dirname, '..', 'log', 'gravalog.js'))
+const gravaLog = new GravaLog();
 let ultimoTocouAudioEm = null;
 class Mixer {
 
@@ -85,18 +88,24 @@ class Mixer {
         hermes.enviaMensagem(numero, nome).then((_) => { console.log(_) }).catch((_) => { console.log(_) })
         this.setAppVolAudioTrue(0.1)
         const audioFile = 'vinheta.mp3';
-        import('audic').then(async (Audic) => {
-            console.log('Audio reproduzido')
-            res.sendStatus(200)
-           await Audic.playAudioFile(audioFile).then((_) =>{
-            ultimoTocouAudioEm = now;
-            console.log("terminou de tocar"), 
-            this.setAppVolAudioTrue(0.9)})
-
-          }).catch((error) => {
-            res.sendStatus(404)
-            console.log('Erro ao reproduzir ', error )
-          });
+        player.play(audioFile, (err) => {
+            if (err) {
+                console.error(`Erro ao reproduzir o áudio: ${err}`);
+                res.sendStatus(400)
+ 			setTimeout(() => {
+                gravaLog("erro ao reproduzir audio")
+                    this.setAppVolAudioTrue(1.0)
+                }, 33000);
+            } else {
+                console.log('Áudio reproduzido com sucesso!');
+		ultimoTocouAudioEm = now;
+                res.sendStatus(200)
+                gravaLog("Audio Reproduzido com sucesso")
+                setTimeout(() => {
+                    this.setAppVolAudioTrue(1.0)
+                }, 33000);
+            }
+        });
     }
     setAppVolAudioTrue(volume) {
         const sessions = NodeAudioVolumeMixer.getAudioSessionProcesses();
@@ -105,6 +114,7 @@ class Mixer {
         });
         NodeAudioVolumeMixer.setAudioSessionVolumeLevelScalar(session.pid, volume);
         console.log(`Volume do ${appName.appName} alterado para ${volume}%`)
+        gravaLog(`Volume do ${appName.appName} alterado para ${volume}%`)
     }
 }
 
